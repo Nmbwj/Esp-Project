@@ -1,4 +1,4 @@
-#define PWM_PIN 13
+#define PWM_PIN 26
 
 void setup(){
   pinMode(PWM_PIN, OUTPUT);
