@@ -9,8 +9,8 @@
 #include <NetworkClientSecure.h>
 #include <WiFi.h>
 
-const char *ssid = "your-ssid";          // your network SSID (name of wifi network)
-const char *password = "your-password";  // your network password
+const char *ssid = "SQUARED_TECH_SOLUTIONS-2";          // your network SSID (name of wifi network)
+const char *password = "STS@2024";  // your network password
 
 const char *server = "www.howsmyssl.com";  // Server URL
 
