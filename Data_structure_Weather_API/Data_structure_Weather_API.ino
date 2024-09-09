@@ -1,4 +1,7 @@
 #include <Arduino.h>
+#include<vector>
+#include<algorithm>
+#include<functional>
 #include <WiFi.h>
 #include <WiFiMulti.h> 
 #include <HTTPClient.h> 
@@ -9,6 +12,51 @@ String openWeatherMapApiKey = "e15379817caada44c2d65cc8509d71c5";
 String latitude = "8.98060340"; //Exact Location
 String longtude = "38.75776050"; //Exact Location
 String jsonBuffer; 
+int var = 0;
+struct weatherDataStruct{
+  String country, city, weatherCond;
+  double temprature, minTemprature, pressure, humidity, windSpeed;
+  
+};
+weatherDataStruct data;
+weatherDataStruct *dataptr;
+std::vector<weatherDataStruct> v1; // v1 is empty, size = 0, capacity =0
+
+template<class T>
+void printVector( String s, const std::vector<T>& v){
+  
+  Serial.print(s + " = (");
+  if(v.size() == 0){
+    Serial.print(") Size: " + String(v.size()) + " Capacity: " + String(v.capacity())+ "\n");
+    return;
+  }
+
+  typename std::vector<T>::const_iterator i = v.begin();
+  for( ; i != v.end()-1; i++){
+  
+  Serial.println("\n  Country: "+ i->country);
+  Serial.println("\n  City: "+ i->city);
+  Serial.println("\n  Weather Condition: "+ i->weatherCond);
+  Serial.println("\n  Temprature: "+ String(i->temprature));
+  Serial.println("\n  Minimum Temprature: "+ String(i->minTemprature));
+  Serial.println("\n  Pressure: "+ String(i->pressure));
+  Serial.println("\n  Humidity: "+ String(i->humidity));
+  Serial.println("\n  WindSpeed: "+ String(i->windSpeed));
+  
+  }
+
+  
+  Serial.println("\n  Country: "+ i->country);
+  Serial.println("\n  City: "+ i->city);
+  Serial.println("\n  Weather Condition: "+ i->weatherCond);
+  Serial.println("\n  Temprature: "+ String(i->temprature));
+  Serial.println("\n  Minimum Temprature: "+ String(i->minTemprature));
+  Serial.println("\n  Pressure: "+ String(i->pressure));
+  Serial.println("\n  Humidity: "+ String(i->humidity));
+  Serial.println("\n  WindSpeed: "+ String(i->windSpeed));
+  Serial.print(") Size: " + String(v.size()) + " Capacity: " + String(v.capacity())+ "\n");
+    
+}
 
 // This is a USERTrust RSA Certification Authority, the root Certificate Authority that
 // signed the server certificate for the demo server https://api.openweathermap.org/data/2.5/weather?lat=8.98060340&lon=38.75776050&APPID=e15379817caada44c2d65cc8509d71c5&units=metric in this
@@ -76,7 +124,8 @@ void setup() {
  Serial.println();
  Serial.println();
  Serial.println(); 
- 
+ dataptr = &data;
+
  WiFi.mode(WIFI_STA);
  WiFiMulti.addAP("SQUARED_TECH_SOLUTIONS-2", "STS@2024");
  Serial.print("Waiting for WiFi to connect...");
@@ -102,7 +151,8 @@ void loop() {
 
   Serial.print("JSON object = "); 
   Serial.println(weatherData); 
-  
+ 
+
   Serial.print("\n\nCountry: ");
   Serial.println(weatherData["sys"]["country"]);
   Serial.print("City: ");
@@ -121,8 +171,31 @@ void loop() {
   Serial.print("Wind Speed: "); 
   Serial.println(weatherData["wind"]["speed"]); 
 
+  Serial.println("This is from the vector buffer...");
+  dataptr->country = String(weatherData["sys"]["country"]);
+  dataptr->city = String(weatherData["name"]);
+  dataptr->weatherCond = String(weatherData["weather"][0]["description"]);
+  dataptr->temprature = (double) weatherData["main"]["temp"];
+  dataptr->minTemprature = (double) weatherData["main"]["temp_min"];
+  dataptr->pressure = (double) weatherData["main"]["pressure"];
+  dataptr->humidity = (double) weatherData["main"]["humidity"];
+  dataptr->windSpeed = (double) weatherData["wind"]["speed"];
+  v1.insert(v1.end(), *dataptr);
+  printVector("Weather ",v1);
+  var++;
+
+
+  if( var == 5 ){
+    v1.clear(); // Wipes out the buffer
+    Serial.print("It is now cleared\n");
+    printVector("Weather ",v1);
+    var = 0;
+  }
+
+
   Serial.println();
   Serial.println("Waiting 2min before the next round...");
+
   delay(10000);
 
 } 
