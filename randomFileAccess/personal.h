@@ -19,7 +19,7 @@ public:
 		return 9 + nameLen + cityLen + sizeof(year) + sizeof(salary);
 	}
 	bool operator==(const Personal & pr) const {
-		return strncmp(pr.SSN, SNN, 9) == 0;
+		return strncmp(pr.SSN, SSN, 9) == 0;
 	}
 protected:
 	const int nameLen, cityLen;

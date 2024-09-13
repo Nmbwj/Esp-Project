@@ -1,7 +1,7 @@
 #include "student.h"
-
+#include <iostream>
 Student::Student() :majorLen(10) {
-	personal();
+	Personal();
 	major = new char[majorLen+1];
 }
 

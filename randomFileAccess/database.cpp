@@ -30,13 +30,13 @@ void Database<T>::modify(const T& d) {
 		}
 	}
 	database.close();
-	cout << "This record to be modified is not in the database\n":
+	cout << "This record to be modified is not in the database\n";
 }
 
 template<class T>
 bool Database<T>::find(const T&d) {
 	T tmp;
-	dasebase.open(fName,ios::in|ios::binary);
+	database.open(fName,ios::in|ios::binary);
 	while(!database.eof()){
 		tmp.readFromFile(database);
 		if(tmp==d){ //overload ==

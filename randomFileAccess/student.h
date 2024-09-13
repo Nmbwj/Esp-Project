@@ -18,7 +18,7 @@ protected:
 	friend ostream& operator<<(ostream& out, Student& sr){
 		return sr.writeLegibly(out);
 	}
-	istream& readFromConsole(isream&);
+	istream& readFromConsole(istream&);
 	friend istream& operator>>(istream& in, Student& sr){
 		return sr.readFromConsole(in);
 	}

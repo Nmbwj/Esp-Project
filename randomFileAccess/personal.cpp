@@ -1,4 +1,5 @@
 #include "personal.h"
+#include <iostream>
 Personal::Personal() : nameLen(10), cityLen(10) {
 	name = new char[nameLen+1];
 	city = new char[cityLen+1];
