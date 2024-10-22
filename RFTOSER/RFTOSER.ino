@@ -164,7 +164,7 @@ void httpPostRequest(const char* serverName){
         Serial.print("HTTP Response code: ");
         Serial.println(httpResponseCode);
         Serial.print("Data: ");
-        Serial.println(data);
+        Serial.println(data-1);
         }else
           Serial.printf("[HTTPS] POST... failed, error: %s\n", https.errorToString(httpResponseCode).c_str());
         // Free resources
